@@ -1,0 +1,33 @@
+_pkgname=csharp-lua
+pkgname="$_pkgname"
+pkgver=2.0
+pkgrel=1
+pkgdesc="The C# to Lua compiler"
+arch=('x86_64')
+url="https://github.com/yanghuan/CSharp.lua"
+license=('Apache')
+conflicts=()
+depends=('dotnet-sdk-7.0')
+options=(!strip)
+_sourcepath="CSharp.lua-$pkgver"
+source=("$_sourcepath.tar.gz::https://github.com/yanghuan/CSharp.lua/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=('037f079e3e00db81f47eaa97c7cf6654b58f47832181b28d8d1bbf9d804cb73d')
+
+build() {
+  cd "$srcdir/$_sourcepath/CSharp.lua.Launcher"
+  dotnet build -c Release -r linux-x64 --no-self-contained
+}
+
+package() {
+  cd "$srcdir/$_sourcepath/CSharp.lua.Launcher/bin/Release/net7.0/linux-x64"
+  find . -type f -exec install -Dm644 "{}" "$pkgdir/opt/$_pkgname/{}" \;
+  chmod 755 "$pkgdir/opt/$_pkgname/CSharp.lua.Launcher"
+  mkdir -p "$pkgdir/usr/bin"
+  printf '#!/usr/bin/sh\nexec "/opt/%s/CSharp.lua.Launcher" "$@"\n' "$_pkgname" >"$pkgdir/usr/bin/$_pkgname"
+  chmod 755 "$pkgdir/usr/bin/$_pkgname"
+  
+  cd "$srcdir/$_sourcepath/CSharp.lua/CoreSystem.Lua"
+  local libdir="$pkgdir/usr/share/$_pkgname/lib"
+  find "CoreSystem" -type f -exec install -Dm644 "{}" "$libdir/{}" \;
+  install -Dm644 -T "All.lua" "$libdir/manifest.lua"
+}
