@@ -23,11 +23,11 @@
     </ItemGroup>
 
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="rm -rf &quot;$(ProjectDir)/out&quot;" />
+        <Exec Command="rm -rf &quot;$(ProjectDir)/out&quot;"/>
     </Target>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="csharp-lua -module -s &quot;$(ProjectDir)&quot; -d &quot;$(ProjectDir)/out&quot; -l &quot;$(TargetDir)/Lua.dll!&quot;" />
+        <Exec Command="csharp-lua -module -s &quot;$(ProjectDir)&quot; -d &quot;$(ProjectDir)/out&quot; -l &quot;$(TargetDir)/Lua.dll!&quot;"/>
     </Target>
 
 </Project>
