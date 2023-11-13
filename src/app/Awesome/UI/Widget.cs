@@ -1,16 +1,14 @@
-using Awesome.Signal;
+using Awesome.Signalling;
 
 namespace Awesome.UI;
 
-public abstract class Widget : IWidgetTemplate, ISignalEmitter
+public abstract class Widget : AwesomeObject, IWidgetTemplate
 {
-    protected static SignalDefinitionCollection SignalDefinitions = new();
-
     private readonly LuaObject _raw;
 
     static Widget()
     {
-        SignalDefinitions.AddRange(new[] { "button::press", "button::release" }, (LuaObject rawWidget, float x, float y, Button button, LuaArray<string> rawModifiers) =>
+        Signal.Define<Widget, MouseButtonSignal>(new[] { "button::press", "button::release" }, (LuaObject rawWidget, float x, float y, Button button, LuaArray<string> rawModifiers) =>
         {
             return new MouseButtonSignal
             {
@@ -21,7 +19,7 @@ public abstract class Widget : IWidgetTemplate, ISignalEmitter
                 Modifiers = rawModifiers.ToList(),
             };
         });
-        SignalDefinitions.AddRange(new[] { "mouse::enter", "mouse::leave" }, (LuaObject rawWidget) =>
+        Signal.Define<Widget, WidgetSignal>(new[] { "mouse::enter", "mouse::leave" }, (LuaObject rawWidget) =>
         {
             return new WidgetSignal
             {
@@ -34,14 +32,10 @@ public abstract class Widget : IWidgetTemplate, ISignalEmitter
     {
         _raw = CreateRaw(template.ToRaw());
 
-        Signals = new(this, SignalDefinitions);
-
         ObjectManager.Wrap(_raw, this);
     }
 
-    protected SignalCollection Signals { get; }
-
-    LuaObject ISignalEmitter.Raw => _raw;
+    public override LuaObject Raw => _raw;
 
     /// <summary>
     /// @CSharpLua.Template = "Lapi.wibox.widget({0})"
@@ -55,25 +49,25 @@ public abstract class Widget : IWidgetTemplate, ISignalEmitter
 
     public event SignalHandler<MouseButtonSignal> MouseButtonPress
     {
-        add => Signals.Connect("button::press", value);
-        remove => Signals.Disconnect("button::press", value);
+        add => Signals.Connect<Widget, MouseButtonSignal>("button::press", value);
+        remove => Signals.Disconnect<Widget, MouseButtonSignal>("button::press", value);
     }
 
     public event SignalHandler<MouseButtonSignal> MouseButtonRelease
     {
-        add => Signals.Connect("button::release", value);
-        remove => Signals.Disconnect("button::release", value);
+        add => Signals.Connect<Widget, MouseButtonSignal>("button::release", value);
+        remove => Signals.Disconnect<Widget, MouseButtonSignal>("button::release", value);
     }
 
     public event SignalHandler<WidgetSignal> MouseEnter
     {
-        add => Signals.Connect("mouse::enter", value);
-        remove => Signals.Disconnect("mouse::enter", value);
+        add => Signals.Connect<Widget, WidgetSignal>("mouse::enter", value);
+        remove => Signals.Disconnect<Widget, WidgetSignal>("mouse::enter", value);
     }
 
     public event SignalHandler<WidgetSignal> MouseLeave
     {
-        add => Signals.Connect("mouse::leave", value);
-        remove => Signals.Disconnect("mouse::leave", value);
+        add => Signals.Connect<Widget, WidgetSignal>("mouse::leave", value);
+        remove => Signals.Disconnect<Widget, WidgetSignal>("mouse::leave", value);
     }
 }

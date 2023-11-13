@@ -1,4 +1,4 @@
-using Awesome.Signal;
+using Awesome.Signalling;
 
 namespace Awesome.UI;
 

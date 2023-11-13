@@ -1,4 +1,4 @@
-namespace Awesome.Signal;
+namespace Awesome.Signalling;
 
 public interface ISignal
 {
