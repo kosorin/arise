@@ -5,12 +5,15 @@ namespace Awesome;
 
 public abstract class AwesomeObject : ISignalSource
 {
-    protected AwesomeObject()
+    protected AwesomeObject(bool isManaged)
     {
+        IsManaged = isManaged;
         Signals = new(this);
     }
 
     public virtual LuaObject Raw => throw new UnreachableException("Property should be abstract (CSharpLua workaround)");
+
+    public bool IsManaged { get; }
 
     protected SignalManager Signals { get; }
 

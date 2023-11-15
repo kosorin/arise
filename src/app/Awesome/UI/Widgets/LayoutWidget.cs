@@ -4,6 +4,10 @@ namespace Awesome.UI.Widgets;
 
 public abstract class LayoutWidget : Widget
 {
+    protected LayoutWidget(LuaObject raw) : base(raw)
+    {
+    }
+
     protected LayoutWidget(LayoutTemplate template) : base(template)
     {
     }

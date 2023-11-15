@@ -18,7 +18,7 @@ public static class Main
             HorizontalAlignment = HorizontalAlignment.Right,
         });
 
-        var wibox = new Wibox(new()
+        var wibox = new Wibox(new WiboxTemplate
         {
             X = 100,
             Y = 50,
@@ -42,8 +42,10 @@ public static class Main
 
         loremWidget.MouseButtonPress += signal =>
         {
-            Console.WriteLine($"==> click: {signal.Button}");
-            wibox.Hide();
+            if (signal.Button == Button.Middle)
+            {
+                wibox.Hide();
+            }
         };
     }
 }

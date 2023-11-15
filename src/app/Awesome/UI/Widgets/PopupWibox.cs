@@ -4,6 +4,10 @@ namespace Awesome.UI.Widgets;
 
 public class PopupWibox : Wibox
 {
+    public PopupWibox(LuaObject raw) : base(raw)
+    {
+    }
+
     public PopupWibox(PopupTemplate template) : base(template)
     {
     }

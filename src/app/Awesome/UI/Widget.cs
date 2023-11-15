@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Awesome.Signalling;
 
 namespace Awesome.UI;
@@ -12,7 +13,7 @@ public abstract class Widget : AwesomeObject, IWidgetTemplate
         {
             return new MouseButtonSignal
             {
-                Widget = ObjectManager.Unwrap<Widget>(rawWidget),
+                Widget = ObjectManager.Resolve<Widget>(rawWidget),
                 X = x,
                 Y = y,
                 Button = button,
@@ -23,16 +24,21 @@ public abstract class Widget : AwesomeObject, IWidgetTemplate
         {
             return new WidgetSignal
             {
-                Widget = ObjectManager.Unwrap<Widget>(rawWidget),
+                Widget = ObjectManager.Resolve<Widget>(rawWidget),
             };
         });
     }
 
-    protected Widget(WidgetTemplate template)
+    protected Widget(LuaObject raw) : base(false)
+    {
+        _raw = raw;
+        ObjectManager.Register(_raw, this);
+    }
+
+    protected Widget(WidgetTemplate template) : base(true)
     {
         _raw = CreateRaw(template.ToRaw());
-
-        ObjectManager.Wrap(_raw, this);
+        ObjectManager.Register(_raw, this);
     }
 
     public override LuaObject Raw => _raw;
@@ -47,6 +53,44 @@ public abstract class Widget : AwesomeObject, IWidgetTemplate
     LuaObject IWidgetTemplate.ToRaw()
     {
         return _raw;
+    }
+
+    public TWidget GetWidget<TWidget>(string id)
+        where TWidget : class
+    {
+        return GetWidget<TWidget>(id, 0);
+    }
+
+    public TWidget GetWidget<TWidget>(string id, int index)
+        where TWidget : class
+    {
+        return TryGetWidget<TWidget>(id, index, out var widget)
+            ? widget
+            : null;
+    }
+
+    public bool TryGetWidget<TWidget>([SuppressMessage("ReSharper", "UnusedParameter.Global")] string id, [MaybeNullWhen(false)] out TWidget widget)
+        where TWidget : class
+    {
+        return TryGetWidget(id, 0, out widget);
+    }
+
+    public bool TryGetWidget<TWidget>([SuppressMessage("ReSharper", "UnusedParameter.Global")] string id, int index, [MaybeNullWhen(false)] out TWidget widget)
+        where TWidget : class
+    {
+        LuaObject rawWidget = null;
+        /*[[
+            local rawWidgets = this._raw:get_children_by_id(id)
+            if not rawWidgets then
+                return false
+            end
+            rawWidget = rawWidgets[index + 1]
+            if not rawWidget then
+                return false
+            end
+        ]]*/
+        // ReSharper disable once ExpressionIsAlwaysNull
+        return ObjectManager.TryResolve(rawWidget, out widget);
     }
 
     public event SignalHandler<MouseButtonSignal> MouseButtonPress
