@@ -2,9 +2,9 @@ using Awesome.UI.Templates;
 
 namespace Awesome.UI.Widgets;
 
-public class Popup : Wibox
+public class PopupWibox : Wibox
 {
-    public Popup(PopupTemplate template) : base(template)
+    public PopupWibox(PopupTemplate template) : base(template)
     {
     }
 

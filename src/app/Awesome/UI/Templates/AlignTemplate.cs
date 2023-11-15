@@ -1,6 +1,6 @@
 namespace Awesome.UI.Templates;
 
-public class AlignTemplate : LayoutWidgetTemplate
+public class AlignTemplate : LayoutTemplate
 {
     public Orientation Orientation { get; set; }
 

@@ -4,7 +4,7 @@ namespace Awesome.UI.Widgets;
 
 public class ContainerWidget : Widget
 {
-    public ContainerWidget(ContainerWidgetTemplate template) : base(template)
+    public ContainerWidget(ContainerTemplate template) : base(template)
     {
     }
 

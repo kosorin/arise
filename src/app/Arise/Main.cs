@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Awesome;
 using Awesome.UI;
 using Awesome.UI.Templates;
 using Awesome.UI.Widgets;
@@ -11,7 +12,7 @@ public static class Main
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static void Run()
     {
-        var loremWidget = new TextBox(new()
+        var loremWidget = new TextBoxWidget(new TextBoxTemplate
         {
             Text = "<big>Lorem ipsum dolor sit amet.</big>",
             HorizontalAlignment = HorizontalAlignment.Right,

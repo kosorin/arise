@@ -1,6 +1,6 @@
 namespace Awesome.UI.Templates;
 
-public abstract class ContainerWidgetTemplate : WidgetTemplate
+public abstract class ContainerTemplate : WidgetTemplate
 {
     public IWidgetTemplate Content { get; set; }
 

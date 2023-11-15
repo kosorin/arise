@@ -4,7 +4,7 @@ namespace Awesome.UI.Widgets;
 
 public abstract class LayoutWidget : Widget
 {
-    protected LayoutWidget(LayoutWidgetTemplate template) : base(template)
+    protected LayoutWidget(LayoutTemplate template) : base(template)
     {
     }
 

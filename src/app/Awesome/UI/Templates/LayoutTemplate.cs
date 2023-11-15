@@ -1,6 +1,6 @@
 namespace Awesome.UI.Templates;
 
-public abstract class LayoutWidgetTemplate : WidgetTemplate
+public abstract class LayoutTemplate : WidgetTemplate
 {
     public List<IWidgetTemplate> Children { get; set; }
 

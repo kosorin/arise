@@ -1,6 +1,6 @@
 namespace Awesome.UI.Templates;
 
-public class BackgroundTemplate : ContainerWidgetTemplate
+public class BackgroundTemplate : ContainerTemplate
 {
     #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
