@@ -2,6 +2,8 @@ namespace Awesome.UI;
 
 public abstract class WidgetTemplate : IWidgetTemplate
 {
+    WidgetTemplateType IWidgetTemplate.Type => WidgetTemplateType.Template;
+
     public string Id { get; set; } = null;
 
     public bool Visible { get; set; } = true;

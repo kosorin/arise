@@ -37,6 +37,8 @@ public abstract class Widget : AwesomeObject, IWidgetTemplate
 
     public override LuaObject Raw => _raw;
 
+    WidgetTemplateType IWidgetTemplate.Type => WidgetTemplateType.Widget;
+
     /// <summary>
     /// @CSharpLua.Template = "Lapi.wibox.widget({0})"
     /// </summary>
