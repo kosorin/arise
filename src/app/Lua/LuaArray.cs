@@ -2,6 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Lua;
 
+public static class LuaArray
+{
+    /// <summary>
+    /// @CSharpLua.Template = "{0}"
+    /// </summary>
+    public static extern LuaArray<TNewValue> From<TNewValue>(dynamic raw);
+}
+
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public class LuaArray<TValue> : LuaObject
 {
@@ -54,9 +62,4 @@ public class LuaArray<TValue> : LuaObject
     /// @CSharpLua.Template = "do local each = {0}; for i, v in ipairs({this}) do each(i - 1, v) end end"
     /// </summary>
     public extern void ForEach(Action<int, TValue> action);
-
-    /// <summary>
-    /// @CSharpLua.Template = "{0}"
-    /// </summary>
-    public static extern LuaArray<TNewValue> From<TNewValue>(dynamic raw);
 }

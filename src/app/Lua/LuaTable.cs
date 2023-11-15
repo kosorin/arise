@@ -2,6 +2,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Lua;
 
+public static class LuaTable
+{
+    /// <summary>
+    /// @CSharpLua.Template = "{0}"
+    /// </summary>
+    public static extern LuaTable<TNewKey, TNewValue> From<TNewKey, TNewValue>(dynamic raw);
+}
+
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public class LuaTable<TKey, TValue> : LuaObject
 {
@@ -55,9 +63,4 @@ public class LuaTable<TKey, TValue> : LuaObject
         ]]*/
         return dictionary;
     }
-
-    /// <summary>
-    /// @CSharpLua.Template = "{0}"
-    /// </summary>
-    public static extern LuaTable<TNewKey, TNewValue> From<TNewKey, TNewValue>(dynamic raw);
 }
