@@ -15,6 +15,14 @@ public class BackgroundTemplate : ContainerTemplate
 
     public string Foreground { get; set; }
 
+    public string BorderColor { get; set; }
+
+    public float BorderWidth { get; set; }
+
+    public BorderStrategy BorderStrategy { get; set; }
+
+    public ShapeHandler Shape { get; set; }
+
     public override LuaObject ToRaw()
     {
         var raw = base.ToRaw();
@@ -22,6 +30,15 @@ public class BackgroundTemplate : ContainerTemplate
         raw.Set("layout", Factory);
         raw.Set("bg", Background);
         raw.Set("fg", Foreground);
+        raw.Set("border_color", BorderColor);
+        raw.Set("border_width", BorderWidth);
+        raw.Set("border_strategy", BorderStrategy switch
+        {
+            BorderStrategy.None => "none",
+            BorderStrategy.Inner => "inner",
+            _ => throw new ArgumentOutOfRangeException(),
+        });
+        raw.Set("shape", Shape);
 
         return raw;
     }

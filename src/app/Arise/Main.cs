@@ -26,8 +26,12 @@ public static class Main
             Height = 200,
             Content = new BackgroundTemplate
             {
+                Id = "bg",
                 Background = "#006600",
                 Foreground = "#ffffcc",
+                BorderColor = "#991100",
+                BorderWidth = 3,
+                Shape = Shape.RoundedRectangle(10),
                 Content = new FixedTemplate
                 {
                     Orientation = Orientation.Vertical,
@@ -39,6 +43,12 @@ public static class Main
                 },
             },
         });
+
+        if (wibox.TryGetWidget("bg", out BackgroundWidget bg))
+        {
+            loremWidget.MouseEnter += _ => bg.Background = "#440044";
+            loremWidget.MouseLeave += _ => bg.Background = "#444400";
+        }
 
         loremWidget.MouseButtonPress += signal =>
         {
