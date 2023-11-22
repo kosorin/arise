@@ -1,3 +1,5 @@
+using Awesome.Input;
+
 namespace Awesome.UI;
 
 public class MouseButtonSignal : WidgetSignal

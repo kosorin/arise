@@ -1,7 +1,12 @@
-namespace Awesome;
+namespace Awesome.Input;
 
 public static class Key
 {
+    /// <summary>
+    /// @CSharpLua.Template = "'Shift'"
+    /// </summary>
+    public static string Shift;
+    
     /// <summary>
     /// @CSharpLua.Template = "'Control'"
     /// </summary>

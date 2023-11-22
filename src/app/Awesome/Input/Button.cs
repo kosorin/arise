@@ -1,4 +1,4 @@
-namespace Awesome;
+namespace Awesome.Input;
 
 public enum Button
 {

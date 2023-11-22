@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Awesome;
+using Awesome.Input;
 using Awesome.UI;
 using Awesome.UI.Templates;
 using Awesome.UI.Widgets;
